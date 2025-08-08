@@ -18,4 +18,8 @@ if [[ -z "$(ls -A "$FOLDER")" ]]; then
     exit 1
 fi
 
-docker run --rm -it -v "$FOLDER":/root/.config/nvim neovim-ubuntu:latest bash
+# Build the Docker image from the current directory
+echo "Building neovim-docker:latest image..."
+docker build -t neovim-docker:latest . || { echo "Docker build failed."; exit 1; }
+
+docker run --rm -it -v "./$FOLDER":/root/.config/nvim neovim-docker:latest ash

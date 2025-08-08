@@ -1,0 +1,27 @@
+services:
+  nvim:
+    build:
+      context: .
+      target: extras
+      args:
+        # Alpine package names for EcoVim requirements
+        EXTRA_PACKAGES: "wget curl unzip git make py3-pip python3 npm nodejs luarocks fd ripgrep cargo"
+    image: ecovim:latest
+    volumes:
+      - ./.neoneo_share:/root/.local/share/nvim/lazy
+      - ~/dotfiles/neoneovim/.config/nvim:/root/.config/nvim
+    tty: true
+    command: ["ash"]
+  ecovim:
+    build:
+      context: .
+      target: extras
+      args:
+        # Alpine package names for EcoVim requirements
+        EXTRA_PACKAGES: "wget curl unzip git make py3-pip python3 npm nodejs luarocks fd ripgrep cargo"
+    image: ecovim:latest
+    volumes:
+      - ./.ecovim_share:/root/.local/share/nvim/lazy
+      - ./ecovim:/root/.config/nvim
+    tty: true
+    command: ["ash"]
